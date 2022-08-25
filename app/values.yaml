@@ -1,5 +1,4 @@
-# The Kubernetes Cluster where the resources wil be created
-# Defaults to local cluster where ArgoCD is deployed
+# DRAG
 destination:
   server: https://kubernetes.default.svc
 # The Git server to used by the application
@@ -19,9 +18,83 @@ gitea:
   username: user-01
   # the gitea password
   password: user-01@123
+
+## Kafka
 bitnami:
   kafka:
     version: 3.2.1
     namespace: kafka
+
+## Google Cloud
+## set this to the Google Cloud SA JSON
+google:
+  application:
+    credentials:
+      file:
+  
+## Lingua Greeter
+
+replicaCount: 1
+
+image:
+  name: example/lingua-greeter
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+imagePullSecrets:
+  - my-registry-creds
+nameOverride: ""
+fullnameOverride: ""
+
 linguaGreeter:
   namespace: demo-apps
+  kafka:
+    bootstrap:
+      servers: kafka:9092
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+imageCredentials:
+  username:
+  password:
+  registry:
+  email:
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
