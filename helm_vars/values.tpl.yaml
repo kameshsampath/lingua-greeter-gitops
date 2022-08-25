@@ -6,7 +6,3 @@ imageCredentials:
 image:
   # defaults to using local nexus registry deployed as part of DRAG stack
   name: "${REGISTRY_NAME}/example/lingua-greeter"
-google:
-  application:
-    credentials:
-      file: "${GOOGLE_APPLICATION_CREDENTIALS}"

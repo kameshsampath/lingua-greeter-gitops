@@ -25,13 +25,7 @@ bitnami:
     version: 3.2.1
     namespace: kafka
 
-## Google Cloud
-## set this to the Google Cloud SA JSON
-google:
-  application:
-    credentials:
-      file:
-  
+ 
 ## Lingua Greeter
 
 replicaCount: 1
@@ -43,7 +37,7 @@ image:
   tag: "latest"
 
 imagePullSecrets:
-  - my-registry-creds
+  - name: my-registry-creds
 nameOverride: ""
 fullnameOverride: ""
 

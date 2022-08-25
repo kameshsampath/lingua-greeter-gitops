@@ -20,3 +20,4 @@ data:
         repos:
           - https://github.com/kameshsampath/drag-stack.git
           - https://github.com/kameshsampath/lingua-greeter.git
+          - https://github.com/kameshsampath/lingua-greeter-gitops.git
