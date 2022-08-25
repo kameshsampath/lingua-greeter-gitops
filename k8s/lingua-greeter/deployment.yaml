@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lingua-greeter
+spec:
+  selector:
+    matchLabels:
+      app: lingua-greeter
+  template:
+    metadata:
+      labels:
+        app: lingua-greeter
+    spec:
+      containers:
+      - name: lingua-greeter
+        image: kameshsampath/lingua-greeter
+        imagePullPolicy: IfNotPresent
+        env:
+         - name: GOOGLE_APPLICATION_CREDENTIALS
+           value: /google-cloud-credentials.json    
+         - name: KAFKA_BOOTSTRAP_SERVERS
+           value: my-cluster-kafka-bootstrap.kafka:9092  
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: google-cloud-creds
+          mountPath: /
+          readOnly: true
+      volumes:
+        - name: google-cloud-creds
+          secret:
+            secretName: google-cloud-creds
+           
+

@@ -1,0 +1,38 @@
+# Git repositories configure Argo CD with (optional).
+# This list is updated when configuring/removing repos from the UI/CLI
+# Note: the last example in the list would use a repository credential template, configured under "argocd-repo-creds.yaml".
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gitea-lingua-greeter
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  url: {{ .Values.gitea.server.outClusterURL }}/{{ .Values.gitea.username }}/lingua-greeter.git
+  password: {{ .Values.gitea.username }}
+  username: {{ .Values.gitea.password }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gitea-lingua-greeter-gitops
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  url: {{ .Values.gitea.server.outClusterURL }}/{{ .Values.gitea.username }}/lingua-greeter-gitops.git
+  password: {{ .Values.gitea.username }}
+  username: {{ .Values.gitea.password }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: bitnami-helm-repo
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  url: https://charts.bitnami.com/bitnami
+  name: bitnami
+  type: helm

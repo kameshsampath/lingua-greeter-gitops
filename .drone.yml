@@ -1,0 +1,72 @@
+---
+kind: pipeline
+type: docker
+name: default
+platform:
+  os: linux
+  arch: arm64
+
+clone:
+  disable: true
+
+steps:
+- name: clone cluster setup 
+  image: alpine/git
+  pull: if-not-exists
+  commands:
+  - git clone https://github.com/kameshsampath/drag-stack.git /drag-stack
+  - cd /drag-stack
+  - git checkout main
+  volumes:
+    - name: drag-stack
+      path: /drag-stack
+
+- name: Setup DRAG
+  image: kameshsampath/kube-dev-tools:v0.0.18
+  pull: if-not-exists
+  settings:
+    create_k3d_cluster: false
+    k3d_cluster_name: gdgkol-demo
+    drag_stack_clone_path: /drag-stack
+    install_components:
+     - gitea
+     - argocd
+  volumes:
+    - name: drag-stack
+      path: /drag-stack
+    - name: dockersock
+      path: /var/run/docker.sock
+    - name: kubeconfig
+      path: /apps/.kube
+ 
+volumes:
+  - name: drag-stack
+    temp: {}
+  - name: kubeconfig
+    temp: {}
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
+---
+kind: pipeline
+type: docker
+name: delete-cluster
+platform:
+  os: linux
+  arch: arm64
+clone:
+  disable: true
+steps:
+  - name: delete cluster
+    image: kameshsampath/kube-dev-tools:v0.0.18
+    pull: if-not-exists
+    commands:
+     - k3d kubeconfig get $K3D_CLUSTER_NAME > /apps/.kube/config
+     - k3d cluster delete $K3D_CLUSTER_NAME
+    volumes:
+    - name: dockersock
+      path: /var/run/docker.sock
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
