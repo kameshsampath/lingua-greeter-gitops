@@ -1,0 +1,8 @@
+fullnameOverride: "lingua-greeter"
+imageCredentials:
+  registry: "nexus.infra.svc.cluster.local"
+  username: "admin"
+  password: "admin123"
+image:
+  # defaults to using local nexus registry deployed as part of DRAG stack
+  name: "nexus.infra.svc.cluster.local/example/lingua-greeter"
