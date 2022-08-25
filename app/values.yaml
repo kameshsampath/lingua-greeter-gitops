@@ -45,7 +45,7 @@ linguaGreeter:
   namespace: demo-apps
   kafka:
     bootstrap:
-      servers: kafka:9092
+      servers: my-cluster-kafka.kafka:9092
 
 serviceAccount:
   # Specifies whether a service account should be created

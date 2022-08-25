@@ -18,7 +18,7 @@ spec:
     chart: kafka  
 
     helm:
-      releaseName: drone-runner-docker
+      releaseName: my-cluster
       values:
       version: v3
 
