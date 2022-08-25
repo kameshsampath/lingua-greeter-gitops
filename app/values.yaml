@@ -22,7 +22,7 @@ gitea:
 ## Kafka
 bitnami:
   kafka:
-    version: 3.2.1
+    version: 18.0.8
     namespace: kafka
 
  
