@@ -7,6 +7,10 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
   labels:
     name: demo-apps
+  annotations:
+    # https://argocd-image-updater.readthedocs.io/en/stable/configuration/applications/
+    argocd-image-updater.argoproj.io/image-list: "lgdemo=${REGISTRY_NAME}/example/lingua-greeter:latest"
+    argocd-image-updater.argoproj.io/lgdemo.update-strategy: digest
 spec:
   project: default
   source:
