@@ -61,7 +61,6 @@ steps:
     image: kameshsampath/kube-dev-tools:v0.0.8
     pull: if-not-exists
     commands:
-     - k3d kubeconfig get $K3D_CLUSTER_NAME > /apps/.kube/config
      - k3d cluster delete $K3D_CLUSTER_NAME
     volumes:
     - name: dockersock
