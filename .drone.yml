@@ -14,9 +14,8 @@ steps:
   image: alpine/git
   pull: if-not-exists
   commands:
-  - git clone https://github.com/kameshsampath/drag-stack.git /drag-stack
+  - git clone https://github.com/kameshsampath/drag-stack.git -b java /drag-stack
   - cd /drag-stack
-  - git checkout main
   volumes:
     - name: drag-stack
       path: /drag-stack
@@ -26,7 +25,7 @@ steps:
   pull: if-not-exists
   settings:
     create_k3d_cluster: true
-    k3d_cluster_name: gdgkol-demo
+    k3d_cluster_name: lingua-greeter
     drag_stack_clone_path: /drag-stack
     install_components:
      - gitea
@@ -38,12 +37,25 @@ steps:
       path: /var/run/docker.sock
     - name: kubeconfig
       path: /apps/.kube
- 
+- name: set kube config
+  image: kameshsampath/kube-dev-tools:v0.0.8
+  pull: if-not-exists
+  commands:
+    - k3d kubeconfig get $K3D_CLUSTER_NAME > /apps/.kube/config
+    - sed -i 's|host.docker.internal|127.0.0.1|' /apps/.kube/config
+  environment:
+    K3D_CLUSTER_NAME: lingua-greeter
+  volumes:
+  - name: dockersock
+    path: /var/run/docker.sock
+  - name: kubeconfig
+    path: /apps/.kube
 volumes:
   - name: drag-stack
     temp: {}
   - name: kubeconfig
-    temp: {}
+    host:
+     path: /Users/kameshs/git/kameshsampath/lingua-greeter-gitops/.kube
   - name: dockersock
     host:
       path: /var/run/docker.sock

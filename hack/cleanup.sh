@@ -2,5 +2,6 @@
 
 set -euxo pipefail
 
-drone exec --trusted --pipeline=delete-cluster
+drone exec --trusted --env-file=.envrc.local --pipeline=delete-cluster
 docker network rm "${DOCKER_NETWORK_NAME}" || true
+rm -rf "$KUBECONFIG"

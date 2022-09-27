@@ -2,9 +2,10 @@
 
 set -euxo pipefail
 
-docker network create "${DOCKER_NETWORK_NAME}" || true
+docker network create --opt "com.docker.network.driver.mtu=1450"\
+   "${DOCKER_NETWORK_NAME}" || true
 
-drone exec --trusted --network="${DOCKER_NETWORK_NAME}"
+drone exec --trusted --env-file=.envrc.local --network="${DOCKER_NETWORK_NAME}"
 
 mkdir -p "${APP_GITOPS_HOME}/.kube"
 
