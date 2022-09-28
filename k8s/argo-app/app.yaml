@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: demo-apps
+  name: lingua-greeter
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   labels:
-    name: demo-apps
+    name: lingua-greeter
   annotations:
     # https://argocd-image-updater.readthedocs.io/en/stable/configuration/applications/
     argocd-image-updater.argoproj.io/image-list: "lgdemo=${REGISTRY_NAME}/example/lingua-greeter:latest"
