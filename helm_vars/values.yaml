@@ -6,3 +6,8 @@ imageCredentials:
 image:
   # defaults to using local nexus registry deployed as part of DRAG stack
   name: "nexus.infra.svc.cluster.local/example/lingua-greeter"
+linguaGreeter:
+  namespace: demo-apps
+  kafka:
+    bootstrap:
+      servers: my-cluster-kafka.kafka:9092
