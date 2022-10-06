@@ -57,7 +57,7 @@ Commit and push the code to git repo,
 
 ```shell
 git commit -a -m "Init GitOps"
-git push origin main
+git push origin demo
 ```
 
 **NOTE**: Please use the right git remote as per your settings
